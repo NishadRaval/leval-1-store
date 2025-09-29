@@ -1,4 +1,4 @@
-/* script.js (Corrected Version) */
+/* script.js (FINAL CLEAN VERSION) */
 
 /* ========= DATA ========= */
 const PROJECTS = [
@@ -42,10 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initBurgerMenu();
   initTypedRoles();
   renderProjects();
-  initProjectInteractions(); // Combines filter and modal logic
+  initProjectInteractions();
   initScrollSpy();
   initIntersectionObservers();
-  initCounters();
   initCanvasBackground();
   initContactForm();
 });
@@ -211,7 +210,6 @@ function initProjectInteractions() {
   window.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains('show')) closeModal(); });
 }
 
-
 function initScrollSpy() {
   const sections = qa("section[id]");
   const navLinks = qa(".nav-link");
@@ -245,32 +243,14 @@ function initIntersectionObservers() {
     });
   }, { threshold: 0.1 });
   
-  // We need to re-run this after projects are rendered
   setTimeout(() => {
     qa(".invisible").forEach(el => observer.observe(el));
   }, 100);
 }
 
 function initCounters() {
-  const projects = q("#counter-projects");
-  const experience = q("#counter-experience");
-  if (projects) animateNumber(projects, 3, 1000);
-  if (experience) animateNumber(experience, 0, 1000);
-}
-
-function animateNumber(el, to, duration = 1000) {
-  let start = 0;
-  const stepTime = 30;
-  const steps = duration / stepTime;
-  const increment = to / steps;
-  const timer = setInterval(() => {
-    start += increment;
-    if (start >= to) {
-      start = to;
-      clearInterval(timer);
-    }
-    el.textContent = Math.floor(start);
-  }, stepTime);
+  // This function is no longer needed as the counters were removed from the hero card.
+  // We leave it empty or remove it. For safety, we can leave it empty.
 }
 
 function initCanvasBackground() {
