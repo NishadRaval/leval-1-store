@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nishad Raval — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#071428">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#home" class="brand">
+        <span class="brand-logo">NR</span>
+        <span class="brand-text">Nishad Raval</span>
+      </a>
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#resume" class="nav-link">Resume</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" id="downloadResume" href="assets/Nishad Raval_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+        <button class="burger" id="burger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <canvas id="bg-canvas"></canvas>
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <p class="eyebrow">Hello, I’m</p>
+        <h1 class="hero-title">Nishad <span class="gradient-text">Raval</span></h1>
+        <p class="hero-sub" id="typed-role"></p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+        <div class="social-links">
+          <a href="#contact" title="Email"><i class="fa-solid fa-envelope"></i> Gmail</a>
+          <a href="https://www.linkedin.com/in/nishadraval" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          <a href="https://github.com/NishadRaval" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://twitter.com/" target="_blank" title="Twitter"><i class="fa-brands fa-twitter"></i> Twitter</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="glass-card">
+          <div class="profile-wrap">
+            <img id="profileImg" src="https://i.redd.it/lg8mw8uk6xz81.jpg" alt="Nishad Raval" class="profile-img">
+            <div class="profile-meta">
+              <h3>Nishad Raval</h3>
+              <p class="muted">Aspiring Web Developer</p>
+              <div class="stats">
+                <div><strong id="counter-projects">3</strong><span>Projects</span></div>
+                <div><strong id="counter-experience">0</strong><span>Years</span></div>
+              </div>
+              <div class="profile-actions">
+                <a href="#contact" class="btn btn-small">Hire me</a>
+                <a href="#projects" class="btn btn-small ghost">See work</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container section-inner">
+      <div class="glass-block">
+        <h2>About Me</h2>
+        <p class="muted">I’m a focused and passionate web developer currently pursuing my studies. I enjoy building clean, accessible, and fast websites — learning new technologies and solving real problems along the way. I build front-end UI, small full-stack apps, and UI prototypes.</p>
+        <div class="about-grid">
+          <div class="about-item">
+            <h3>What I do</h3>
+            <p>Frontend development, UI/UX prototyping, responsive design, and small backend integrations.</p>
+          </div>
+          <div class="about-item">
+            <h3>Tools I use</h3>
+            <p>VS Code, Git, Chrome DevTools, Figma, Node.js, Github.</p>
+          </div>
+          <div class="about-item">
+            <h3>Why hire me</h3>
+            <p>I’m a fast learner, reliable, and focused on shipping quality. I enjoy team collaboration and building production-ready code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section dark-section">
+    <div class="container section-inner">
+      <div class="glass-block">
+        <div class="projects-head">
+          <h2>Selected Projects</h2>
+          <div class="filter-row">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="ui">UI</button>
+            <button class="filter-btn" data-filter="others">Other</button>
+          </div>
+        </div>
+        <div id="projectsGrid" class="projects-grid">
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume" class="section">
+    <div class="container section-inner">
+      <div class="glass-block">
+        <h2>My Resume</h2>
+        <p class="muted">Download the latest version of my resume or view it directly in your browser.</p>
+        <div class="resume-actions">
+          <a href="assets/Nishad Raval_Resume.pdf" target="_blank" class="btn btn-primary">Download Resume</a>
+          <a href="#contact" class="btn btn-outline">Contact for details</a>
+        </div>
+        <div class="resume-preview">
+          <iframe src="assets/Nishad Raval_Resume.pdf" title="Resume preview" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container section-inner">
+      <div class="glass-block">
+        <h2>Contact Me</h2>
+        <p class="muted">Got a project? Want to collaborate? Fill the form or email me directly.</p>
+        <div class="contact-grid">
+          <form id="contactForm" class="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="message" rows="6" placeholder="Your message" required></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+          <div class="contact-info">
+            <h3>Get in touch</h3>
+            <p><i class="fa-solid fa-envelope"></i> <a href="https://nishadsraval@gmail.com">nishadsraval@gmail.com</a></p>
+            <p><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/nishadraval" target="_blank">linkedin.com/in/nishadraval</a></p>
+            <p><i class="fa-brands fa-github"></i> <a href="https://github.com/NishadRaval" target="_blank">github.com/NishadRaval</a></p>
+            <div class="contact-social">
+              <a href="#" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Nishad Raval - Personal Portfolio</p>
+    </div>
+  </footer>
+
+  <div id="projectModal" class="modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <div class="modal-body" id="modalBody">
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=final"></script>
+</body>
+</html>
