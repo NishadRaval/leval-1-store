@@ -1,4 +1,4 @@
-/* script.js (CLEAN VERSION - NO SKILLS) */
+/* script.js (Corrected Version) */
 
 /* ========= DATA ========= */
 const PROJECTS = [
@@ -17,8 +17,8 @@ const PROJECTS = [
     desc: "A pixel-perfect clone of the Netflix homepage, built with a focus on CSS, responsive design, and recreating the signature user interface and feel.",
     tags: ["web", "ui", "design"],
     thumb: "assets/3.png",
-    github: "#",
-    live: "#"
+    github: "https://github.com/NishadRaval/netflix-clone",
+    live: "https://clone-net-nishad.netlify.app/"
   },
   {
     id: "p3",
@@ -26,8 +26,8 @@ const PROJECTS = [
     desc: "The interactive and responsive portfolio you're looking at right now, built with vanilla JavaScript, HTML, and CSS. Features animations and dynamic content.",
     tags: ["web", "ui", "javascript"],
     thumb: "assets/4.jpg",
-    github: "#",
-    live: "#"
+    github: "https://github.com/NishadRaval/NishadRaval.github.io",
+    live: "https://NishadRaval.github.io"
   }
 ];
 
@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initBurgerMenu();
   initTypedRoles();
   renderProjects();
+  initProjectInteractions(); // Combines filter and modal logic
   initScrollSpy();
   initIntersectionObservers();
   initCounters();
   initCanvasBackground();
   initContactForm();
-  initModals();
 });
 
 /* ========= FEATURE FUNCTIONS ========= */
@@ -122,48 +122,95 @@ function initTypedRoles() {
 function renderProjects() {
   const grid = q("#projectsGrid");
   if (!grid) return;
+  
+  grid.innerHTML = PROJECTS.map(p => {
+    const hasLiveLink = p.live && p.live !== "#";
+    const hasGithubLink = p.github && p.github !== "#";
 
-  PROJECTS.forEach(p => {
-    const card = document.createElement("article");
-    card.className = "project-card invisible";
-    card.dataset.tags = p.tags.join(" ");
-    card.innerHTML = `
-      <div class="project-thumb-wrap">
-        <img class="project-thumb" src="${p.thumb}" alt="${p.title}">
-      </div>
-      <div class="project-body">
-        <h3 class="project-title">${p.title}</h3>
-        <p class="project-desc">${p.desc}</p>
-        <div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
-        <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
-          <a href="${p.github}" target="_blank" rel="noopener" class="btn btn-small ghost"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="${p.live}" target="_blank" rel="noopener" class="btn btn-small">Live Demo</a>
-          <button class="btn btn-small ghost btn-details" data-id="${p.id}">Details</button>
+    const githubBtn = hasGithubLink
+      ? `<a href="${p.github}" target="_blank" rel="noopener" class="btn btn-small ghost"><i class="fa-brands fa-github"></i> GitHub</a>`
+      : `<button class="btn btn-small ghost btn-disabled"><i class="fa-brands fa-github"></i> GitHub</button>`;
+
+    const liveBtn = hasLiveLink
+      ? `<a href="${p.live}" target="_blank" rel="noopener" class="btn btn-small">Live Demo</a>`
+      : `<button class="btn btn-small btn-disabled">Coming Soon</button>`;
+
+    return `
+      <article class="project-card invisible" data-tags="${p.tags.join(" ")}">
+        <div class="project-thumb-wrap">
+          <img class="project-thumb" src="${p.thumb}" alt="${p.title}">
         </div>
-      </div>
+        <div class="project-body">
+          <h3 class="project-title">${p.title}</h3>
+          <p class="project-desc">${p.desc}</p>
+          <div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
+          <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
+            ${githubBtn}
+            ${liveBtn}
+            <button class="btn btn-small ghost btn-details" data-id="${p.id}">Details</button>
+          </div>
+        </div>
+      </article>
     `;
-    grid.appendChild(card);
-  });
+  }).join("");
+}
 
+function initProjectInteractions() {
+  // Logic for filtering
   qa(".filter-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       qa(".filter-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      filterProjects(btn.dataset.filter);
+      const filter = btn.dataset.filter;
+      qa(".project-card").forEach(card => {
+        const tags = card.dataset.tags.split(" ");
+        card.style.display = (filter === "all" || tags.includes(filter)) ? "block" : "none";
+      });
     });
   });
+
+  // Logic for opening the details modal
+  const modal = q("#projectModal");
+  const modalBody = q("#modalBody");
+  const modalClose = q("#modalClose");
+  if (!modal || !modalBody || !modalClose) return;
+
+  const openModal = (pid) => {
+    const project = PROJECTS.find(p => p.id === pid);
+    if (!project) return;
+    modalBody.innerHTML = `
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <img src="${project.thumb}" alt="${project.title}" style="width:320px;max-width:100%;border-radius:10px;object-fit:cover;" />
+        <div style="flex:1;min-width:280px">
+          <h2 style="margin-top:0">${project.title}</h2>
+          <p>${project.desc}</p>
+          <div style="margin:12px 0">${project.tags.map(t => `<span style="display:inline-block;margin:4px;padding:6px 10px;border-radius:16px;background:rgba(255,255,255,0.05)">${t}</span>`).join("")}</div>
+          <div style="display:flex;gap:10px;margin-top:16px">
+            <a href="${project.github}" target="_blank" class="btn btn-small ghost"><i class="fa-brands fa-github"></i> View on GitHub</a>
+            <a href="${project.live}" target="_blank" class="btn btn-small">Open Live Demo</a>
+          </div>
+        </div>
+      </div>`;
+    modal.classList.add("show");
+  };
+
+  const closeModal = () => modal.classList.remove("show");
+
+  const projectsGrid = q("#projectsGrid");
+  if (projectsGrid) {
+    projectsGrid.addEventListener('click', (e) => {
+      const detailsButton = e.target.closest('.btn-details');
+      if (detailsButton) {
+        openModal(detailsButton.dataset.id);
+      }
+    });
+  }
+
+  modalClose.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains('show')) closeModal(); });
 }
 
-function filterProjects(filter) {
-  qa(".project-card").forEach(card => {
-    const tags = card.dataset.tags.split(" ");
-    if (filter === "all" || tags.includes(filter)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
-  });
-}
 
 function initScrollSpy() {
   const sections = qa("section[id]");
@@ -197,8 +244,11 @@ function initIntersectionObservers() {
       }
     });
   }, { threshold: 0.1 });
-
-  qa(".invisible").forEach(el => observer.observe(el));
+  
+  // We need to re-run this after projects are rendered
+  setTimeout(() => {
+    qa(".invisible").forEach(el => observer.observe(el));
+  }, 100);
 }
 
 function initCounters() {
@@ -301,44 +351,4 @@ function showToast(msg, time = 3000) {
   document.body.appendChild(t);
   setTimeout(() => t.style.opacity = "1", 50);
   setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 300); }, time);
-}
-
-function initModals() {
-  const modal = q("#projectModal");
-  if (!modal) return;
-
-  const openModal = (pid) => {
-    const project = PROJECTS.find(p => p.id === pid);
-    if (!project) return;
-    q("#modalBody").innerHTML = `
-      <div style="display:flex;gap:24px;flex-wrap:wrap;">
-        <img src="${project.thumb}" alt="${project.title}" style="width:320px;max-width:100%;border-radius:10px;object-fit:cover;" />
-        <div style="flex:1;min-width:280px">
-          <h2 style="margin-top:0">${project.title}</h2>
-          <p>${project.desc}</p>
-          <div style="margin:12px 0">${project.tags.map(t => `<span style="display:inline-block;margin:4px;padding:6px 10px;border-radius:16px;background:rgba(255,255,255,0.05)">${t}</span>`).join("")}</div>
-          <div style="display:flex;gap:10px;margin-top:16px">
-            <a href="${project.github}" target="_blank" class="btn btn-small ghost"><i class="fa-brands fa-github"></i> View on GitHub</a>
-            <a href="${project.live}" target="_blank" class="btn btn-small">Open Live Demo</a>
-          </div>
-        </div>
-      </div>`;
-    modal.classList.add("show");
-  };
-
-  const closeModal = () => modal.classList.remove("show");
-
-  const projectsGrid = q("#projectsGrid");
-  if (projectsGrid) {
-    projectsGrid.addEventListener('click', (e) => {
-      const detailsButton = e.target.closest('.btn-details');
-      if (detailsButton) {
-        openModal(detailsButton.dataset.id);
-      }
-    });
-  }
-
-  q("#modalClose")?.addEventListener("click", closeModal);
-  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 }
