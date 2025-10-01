@@ -31,6 +31,15 @@ const PROJECTS = [
   }
 ];
 
+const CERTIFICATES = [
+  {
+    title: "Foundational C# with Microsoft",
+    issuer: "freeCodeCamp & Microsoft",
+    thumb: "assets/5.png", // Use a path to your certificate image
+    url: "https://www.freecodecamp.org/certification/nishadraval/foundational-c-sharp-with-microsoft" // Add the verification link here
+  }
+];
+
 /* ========= UTILS ========= */
 const q = (sel, ctx = document) => ctx.querySelector(sel);
 const qa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
@@ -42,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBurgerMenu();
   initTypedRoles();
   renderProjects();
+  renderCertificates();
   initProjectInteractions();
   initScrollSpy();
   initIntersectionObservers();
@@ -153,6 +163,35 @@ function renderProjects() {
     `;
   }).join("");
 }
+
+// ... after the renderProjects() function
+
+function renderCertificates() {
+  const grid = q("#certificatesGrid");
+  if (!grid) return;
+
+  grid.innerHTML = CERTIFICATES.map(cert => {
+    const hasUrl = cert.url && cert.url !== "#";
+    const viewButton = hasUrl
+      ? `<a href="${cert.url}" target="_blank" rel="noopener" class="btn btn-small btn-outline">View Credential</a>`
+      : `<button class="btn btn-small btn-disabled">No Link</button>`;
+
+    return `
+      <article class="certificate-card invisible">
+        <div class="certificate-thumb-wrap">
+          <img class="certificate-thumb" src="${cert.thumb}" alt="${cert.title}">
+        </div>
+        <div class="certificate-body">
+          <h3 class="certificate-title">${cert.title}</h3>
+          <p class="certificate-issuer">Issued by: ${cert.issuer}</p>
+          ${viewButton}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+// ...
 
 function initProjectInteractions() {
   // Logic for filtering
