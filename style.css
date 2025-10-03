@@ -17,7 +17,6 @@
   --transition-speed: 300ms;
 }
 
-
 /* ---------- base reset ---------- */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -306,6 +305,8 @@ body {
 .modal.show { opacity: 1; visibility: visible; }
 .modal-inner {
   width: min(920px, 94%); border-radius: 14px; background: rgba(11, 37, 64, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 28px; position: relative; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); transform: scale(0.95); transition: transform 400ms ease;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 .modal.show .modal-inner { transform: scale(1); }
 .modal-close { position: absolute; top: 14px; right: 18px; font-size: 28px; background: transparent; border: 0; color: var(--muted); cursor: pointer; transition: all var(--transition-speed) ease; }
@@ -326,13 +327,14 @@ body {
   .hero-inner { flex-direction: column; text-align: center; }
   .hero-left { max-width: 100%; order: 2; }
   .hero-right { order: 1; width: 100%; margin-bottom: 2rem; }
-  .hero-ctas, .social-links, .profile-actions { justify-content: center; }
+  .hero-ctas, .social-links { justify-content: center; }
   .contact-grid { grid-template-columns: 1fr; }
   .nav-list {
     display: none; position: absolute; top: 100%; right: 1rem; width: 220px; background: rgba(3, 7, 12, 0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; flex-direction: column; gap: 10px; border: 1px solid var(--card-border);
   }
   .nav.open .nav-list { display: flex; }
   .burger { display: flex; }
+  .nav-actions .code-anim-container { display: none; }
 }
 @media (max-width: 580px) {
   .hero-title { font-size: 38px; }
@@ -562,31 +564,39 @@ body {
   color: var(--muted);
 }
 
-
 /* =========================
-   NEW — Theme Toggle Button
+   Case Study Modal Styles
    ========================= */
-/* Smooth transition for all color changes */
-body, .glass-block, .header, .btn, .nav-link, .skill-card {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+.case-study-body {
+  text-align: left;
+  line-height: 1.7;
 }
 
-/* Style for the new icon button */
-.btn-icon {
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  font-size: 18px;
+.case-study-body h2 {
+  text-align: left;
+  color: var(--accent);
+  margin-bottom: 0;
 }
 
-.btn-icon .fa-sun { display: none; }
-.btn-icon .fa-moon { display: block; }
+.case-study-body h3 {
+  color: var(--accent-2);
+  margin-top: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 8px;
+}
 
-body.light-theme .btn-icon .fa-sun { display: block; }
-body.light-theme .btn-icon .fa-moon { display: none; }
+.case-study-body p {
+  color: var(--muted);
+}
+
+.case-study-body strong {
+  color: #fff;
+  font-weight: 600;
+}
 
 /* =========================
-   NEW — Header Code Animations
+   Header Code Animations
    ========================= */
 .code-anim-container {
   display: flex;
@@ -601,7 +611,6 @@ body.light-theme .btn-icon .fa-moon { display: none; }
   animation: subtle-pulse 4s infinite;
 }
 
-/* This keyframe makes the character appear, hold, and then fade out slowly */
 @keyframes subtle-pulse {
   0% { opacity: 0; }
   25% { opacity: 1; }
@@ -609,7 +618,6 @@ body.light-theme .btn-icon .fa-moon { display: none; }
   100% { opacity: 0; }
 }
 
-/* Stagger the animation for each character to create a pulse effect */
 .code-char:nth-child(1) {
   animation-delay: 0s;
 }
@@ -620,9 +628,8 @@ body.light-theme .btn-icon .fa-moon { display: none; }
   animation-delay: 0.4s;
 }
 
-/* Ensure the space between braces is always visible */
 .nav-actions .code-char:nth-child(2) {
   animation: none;
   opacity: 1;
-  width: 8px; /* Control the space width */
+  width: 8px;
 }
