@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA FETCHING & RENDERING (Products) ---
     async function fetchAllProducts() {
         try {
-            const response = await fetch('http://localhost:5000/api/products');
+            const response = await fetch('https://leval-1-store.onrender.com/api/products');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             products = await response.json();
             renderProductGrids();
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!DOM.pdpContent) return;
         DOM.pdpContent.innerHTML = `<p>Loading product...</p>`;
         try {
-            const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+            const response = await fetch(`https://leval-1-store.onrender.com/api/products/${productId}`);
             if (!response.ok) throw new Error('Product not found');
             const product = await response.json();
 
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('login-password').value;
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/login', {
+            const response = await fetch('https://leval-1-store.onrender.com/api/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('register-password').value;
 
         try {
-             const response = await fetch('http://localhost:5000/api/users/register', {
+             const response = await fetch('https://leval-1-store.onrender.com/api/users/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password }),
